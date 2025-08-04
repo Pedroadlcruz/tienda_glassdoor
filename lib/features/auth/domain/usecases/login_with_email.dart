@@ -2,11 +2,11 @@ import '../../data/models/app_user.dart';
 import '../repositories/auth_repository.dart';
 
 class LoginWithEmail {
-  final AuthRepository authRepository;
+  final AuthRepository _authRepository;
 
-  LoginWithEmail({required this.authRepository});
+  LoginWithEmail(this._authRepository);
 
   Future<AppUser> call(String email, String password) {
-    return authRepository.signInWithEmailAndPassword(email, password);
+    return _authRepository.signInWithEmailAndPassword(email, password);
   }
 }

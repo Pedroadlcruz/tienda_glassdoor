@@ -2,11 +2,11 @@ import '../../data/models/app_user.dart';
 import '../repositories/auth_repository.dart';
 
 class LoginWithGoogle {
-  final AuthRepository authRepository;
+  final AuthRepository _authRepository;
 
-  LoginWithGoogle({required this.authRepository});
+  LoginWithGoogle(this._authRepository);
 
   Future<AppUser> call() {
-    return authRepository.signInWithGoogle();
+    return _authRepository.signInWithGoogle();
   }
 }
