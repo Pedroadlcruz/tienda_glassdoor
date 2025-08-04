@@ -24,6 +24,8 @@ class AppUser extends Equatable {
 
   Map<String, dynamic> toJson() => _$AppUserToJson(this);
 
+  static const empty = AppUser(id: '', email: '');
+
   AppUser copyWith({
     String? id,
     String? email,
@@ -48,30 +50,3 @@ class AppUser extends Equatable {
     return 'AppUser(id: $id, email: $email, name: $name)';
   }
 }
-
-// class UserData extends Equatable {
-//   const UserData(
-//     this.platinoId,
-//     this.names,
-//     this.code,
-//     this.emails,
-//     this.roles,
-//   );
-
-//   final String platinoId;
-//   final String names;
-//   final String code;
-//   final List<String> emails;
-//   final List<String> roles;
-
-//   bool get isAdmin => roles.contains(OneRole.admin);
-//   // bool get isAdmin => roles.contains(dotenv.env["ONE_ADMIN"]);
-//   bool get hasMultiRole => roles.length > 1;
-//   factory UserData.fromJson(Map<String, dynamic> json) =>
-//       _$UserDataFromJson(json);
-
-//   Map<String, dynamic> toJson() => _$UserDataToJson(this);
-
-//   @override
-//   List<Object?> get props => [platinoId, names, code, roles];
-// }
