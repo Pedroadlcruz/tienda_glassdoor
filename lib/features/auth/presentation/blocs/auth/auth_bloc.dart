@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/app_user.dart';
 import '../../../domain/usecases/auth_usecases.dart';
-import 'auth_event.dart';
-import 'auth_state.dart';
+
+part 'auth_event.dart';
+part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthUseCases _authUseCases;

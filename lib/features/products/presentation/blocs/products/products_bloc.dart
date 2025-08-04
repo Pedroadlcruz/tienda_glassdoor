@@ -1,8 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../data/models/product.dart';
 import '../../../domain/usecases/products_usecases.dart';
-import 'products_event.dart';
-import 'products_state.dart';
+
+part 'products_event.dart';
+part 'products_state.dart';
 
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   final ProductsUseCases _productsUseCases;

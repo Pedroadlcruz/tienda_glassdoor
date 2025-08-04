@@ -6,7 +6,6 @@ import 'core/config/di/service_locator.dart';
 import 'core/config/router/app_router.dart';
 import 'core/config/router/app_router_refresh_notifier.dart';
 import 'features/auth/presentation/blocs/auth/auth_bloc.dart';
-import 'features/auth/presentation/blocs/auth/auth_event.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-import '../../../data/models/product.dart';
+part of 'products_bloc.dart';
 
 sealed class ProductsState extends Equatable {
   const ProductsState();

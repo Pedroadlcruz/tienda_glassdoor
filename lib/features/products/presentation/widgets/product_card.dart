@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../auth/presentation/blocs/auth/auth_bloc.dart';
-import '../../../auth/presentation/blocs/auth/auth_state.dart';
 import '../../data/models/product.dart';
 
 class ProductCard extends StatelessWidget {
@@ -59,7 +58,7 @@ class ProductCard extends StatelessWidget {
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
-        onTap: () => context.go('/product/${product.id}'),
+        onTap: () => context.go('/home/product/${product.id}'),
         borderRadius: BorderRadius.circular(12),
         child: Stack(
           children: [

@@ -6,9 +6,10 @@ import '../../../features/auth/presentation/blocs/login/login_bloc.dart';
 import '../../../features/auth/presentation/blocs/register/register_bloc.dart';
 import '../../../features/auth/presentation/pages/login_page.dart';
 import '../../../features/auth/presentation/pages/register_page.dart';
+import '../../../features/products/presentation/blocs/product_detail/product_detail_bloc.dart';
 import '../../../features/products/presentation/blocs/products/products_bloc.dart';
-import '../../../features/products/presentation/blocs/products/products_event.dart';
 import '../../../features/products/presentation/pages/home_page.dart';
+import '../../../features/products/presentation/pages/product_detail_page.dart';
 import '../../../features/products/presentation/pages/profile_page.dart';
 import '../../config/di/service_locator.dart';
 import '../../widgets/no_network_page.dart';
@@ -77,14 +78,18 @@ class AppRouter {
           child: const HomePage(),
         ),
         routes: [
-          // GoRoute(
-          //   path: 'product/:id',
-          //   name: 'product-detail',
-          //   builder: (context, state) {
-          //     final productId = state.pathParameters['id']!;
-          //     return ProductDetailPage(productId: productId);
-          //   },
-          // ),
+          GoRoute(
+            path: 'product/:id',
+            name: 'product-detail',
+            builder: (context, state) {
+              final productId = state.pathParameters['id']!;
+              return BlocProvider.value(
+                value: sl<ProductDetailBloc>()
+                  ..add(LoadProductDetail(productId)),
+                child: const ProductDetailPage(),
+              );
+            },
+          ),
           // GoRoute(
           //   path: 'cart',
           //   name: 'cart',
