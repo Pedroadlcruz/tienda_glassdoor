@@ -6,7 +6,9 @@ import '../../../features/auth/presentation/blocs/login/login_bloc.dart';
 import '../../../features/auth/presentation/blocs/register/register_bloc.dart';
 import '../../../features/auth/presentation/pages/login_page.dart';
 import '../../../features/auth/presentation/pages/register_page.dart';
-import '../../../features/home/presentation/pages/home_page.dart';
+import '../../../features/products/presentation/blocs/products/products_bloc.dart';
+import '../../../features/products/presentation/blocs/products/products_event.dart';
+import '../../../features/products/presentation/pages/home_page.dart';
 import '../../config/di/service_locator.dart';
 import '../../widgets/no_network_page.dart';
 import 'app_router_refresh_notifier.dart';
@@ -66,7 +68,13 @@ class AppRouter {
       GoRoute(
         path: '/home',
         name: 'home',
-        builder: (context, state) => const HomePage(),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            // BlocProvider.value(value: sl<AuthBloc>()..add(CheckAuthStatus())),
+            BlocProvider.value(value: sl<ProductsBloc>()..add(LoadProducts())),
+          ],
+          child: const HomePage(),
+        ),
         routes: const [
           // GoRoute(
           //   path: 'product/:id',
