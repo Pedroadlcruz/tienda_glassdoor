@@ -4,11 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../auth/presentation/blocs/auth/auth_bloc.dart';
-import '../../../auth/presentation/blocs/auth/auth_event.dart';
-import '../../../auth/presentation/blocs/auth/auth_state.dart';
 import '../blocs/products/products_bloc.dart';
-import '../blocs/products/products_event.dart';
-import '../blocs/products/products_state.dart';
 import '../widgets/product_card.dart';
 
 class HomePage extends StatefulWidget {
