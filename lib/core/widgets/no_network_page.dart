@@ -21,14 +21,10 @@ class NoNetworkPage extends StatelessWidget {
                   color: Colors.grey[200],
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
-                  Icons.wifi_off,
-                  size: 60,
-                  color: Colors.grey[600],
-                ),
+                child: Icon(Icons.wifi_off, size: 60, color: Colors.grey[600]),
               ),
               const SizedBox(height: 32),
-              
+
               // Title
               Text(
                 'Sin Conexión a Internet',
@@ -40,7 +36,7 @@ class NoNetworkPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
-              
+
               // Description
               Text(
                 'No se puede acceder a la aplicación sin conexión a internet. Por favor, verifica tu conexión y vuelve a intentarlo.',
@@ -52,34 +48,7 @@ class NoNetworkPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
-              
-              // Retry Button
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // This will trigger a router refresh
-                    Navigator.of(context).pushReplacementNamed('/');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: Text(
-                    'Reintentar',
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              
+
               // Settings Button
               SizedBox(
                 width: double.infinity,
@@ -90,13 +59,17 @@ class NoNetworkPage extends StatelessWidget {
                     // Note: This would require additional packages for platform-specific settings
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Por favor, ve a Configuración > Wi-Fi para verificar tu conexión'),
+                        content: Text(
+                          'Por favor, ve a Configuración > Wi-Fi para verificar tu conexión',
+                        ),
                         duration: Duration(seconds: 3),
                       ),
                     );
                   },
                   style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: Theme.of(context).colorScheme.primary),
+                    side: BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -117,4 +90,4 @@ class NoNetworkPage extends StatelessWidget {
       ),
     );
   }
-} 
+}

@@ -30,6 +30,11 @@ class AppRouter {
         return '/nonetwork';
       }
 
+      if (notifier.isOnline && state.matchedLocation == '/nonetwork') {
+        print('[DEBUG] Router redirect - back online, redirecting to /home');
+        return '/home';
+      }
+
       // Routes that require authentication
       final protectedRoutes = ['/cart', '/profile'];
 

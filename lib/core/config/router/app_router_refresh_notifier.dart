@@ -19,6 +19,7 @@ class AppRouterRefreshNotifier extends ChangeNotifier {
 
   AppUser get currentUser => _currentUser;
   bool get isOnline => _isOnline;
+  bool get isAuthenticated => _currentUser != AppUser.empty;
 
   AppRouterRefreshNotifier(this._authRepository, this._networkInfo) {
     _initializeListeners();
