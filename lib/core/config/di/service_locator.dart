@@ -13,6 +13,7 @@ import '../../../features/auth/presentation/blocs/register/register_bloc.dart';
 import '../../../features/products/data/repositories/fake_products_repository_impl.dart';
 import '../../../features/products/domain/repositories/products_repository.dart';
 import '../../../features/products/domain/usecases/products_usecases.dart';
+import '../../../features/products/presentation/blocs/product_detail/product_detail_bloc.dart';
 import '../../../features/products/presentation/blocs/products/products_bloc.dart';
 import '../../services/network/network_info.dart';
 import '../router/app_router_refresh_notifier.dart';
@@ -32,6 +33,7 @@ Future<void> setUpServiceLocator() async {
   );
   sl.registerFactory(() => AuthBloc(sl<AuthUseCases>()));
   sl.registerFactory(() => ProductsBloc(sl<ProductsUseCases>()));
+  sl.registerFactory(() => ProductDetailBloc(sl<ProductsUseCases>()));
 
   //! Use cases
   sl.registerLazySingleton(() => LoginWithEmail(sl<AuthRepository>()));
