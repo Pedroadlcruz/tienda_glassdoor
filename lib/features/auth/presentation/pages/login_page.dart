@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/extensions/validators.dart';
 import '../blocs/login/login_bloc.dart';
 
 class LoginPage extends StatefulWidget {
@@ -45,20 +46,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
-          if (state is LoginSuccess) {
-            // Show success message and redirect to home page
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('¡Bienvenido! Iniciando sesión...'),
-                backgroundColor: Colors.green,
-                duration: Duration(seconds: 1),
-              ),
-            );
-            // Small delay to show the success message
-            Future.delayed(const Duration(milliseconds: 500), () {
-              context.go('/');
-            });
-          } else if (state is LoginFailure) {
+          if (state is LoginFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
@@ -121,15 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                       labelText: 'Email',
                       prefixIcon: Icon(Icons.email),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor ingresa tu email';
-                      }
-                      if (!value.contains('@')) {
-                        return 'Por favor ingresa un email válido';
-                      }
-                      return null;
-                    },
+                    validator: (email) => email!.isEmailValid,
                   ),
                   const SizedBox(height: 20),
 
@@ -153,15 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor ingresa tu contraseña';
-                      }
-                      if (value.length < 6) {
-                        return 'La contraseña debe tener al menos 6 caracteres';
-                      }
-                      return null;
-                    },
+                    validator: (password) => password!.isPasswordValid,
                   ),
                   const SizedBox(height: 30),
 
