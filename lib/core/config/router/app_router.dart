@@ -9,6 +9,7 @@ import '../../../features/auth/presentation/pages/register_page.dart';
 import '../../../features/products/presentation/blocs/products/products_bloc.dart';
 import '../../../features/products/presentation/blocs/products/products_event.dart';
 import '../../../features/products/presentation/pages/home_page.dart';
+import '../../../features/products/presentation/pages/profile_page.dart';
 import '../../config/di/service_locator.dart';
 import '../../widgets/no_network_page.dart';
 import 'app_router_refresh_notifier.dart';
@@ -75,7 +76,7 @@ class AppRouter {
           ],
           child: const HomePage(),
         ),
-        routes: const [
+        routes: [
           // GoRoute(
           //   path: 'product/:id',
           //   name: 'product-detail',
@@ -89,11 +90,11 @@ class AppRouter {
           //   name: 'cart',
           //   builder: (context, state) => const CartPage(),
           // ),
-          // GoRoute(
-          //   path: 'profile',
-          //   name: 'profile',
-          //   builder: (context, state) => const ProfilePage(),
-          // ),
+          GoRoute(
+            path: 'profile',
+            name: 'profile',
+            builder: (context, state) => const ProfilePage(),
+          ),
         ],
       ),
       GoRoute(

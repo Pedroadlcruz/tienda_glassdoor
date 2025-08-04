@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                 return PopupMenuButton<String>(
                   onSelected: (value) {
                     if (value == 'profile') {
-                      context.go('/login');
+                      context.go('/home/profile');
                     } else if (value == 'logout') {
                       _onSignOut();
                     }
