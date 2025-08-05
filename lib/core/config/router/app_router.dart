@@ -6,6 +6,8 @@ import '../../../features/auth/presentation/blocs/login/login_bloc.dart';
 import '../../../features/auth/presentation/blocs/register/register_bloc.dart';
 import '../../../features/auth/presentation/pages/login_page.dart';
 import '../../../features/auth/presentation/pages/register_page.dart';
+import '../../../features/cart/presentation/blocs/cart/cart_bloc.dart';
+import '../../../features/cart/presentation/pages/cart_page.dart';
 import '../../../features/products/presentation/blocs/product_detail/product_detail_bloc.dart';
 import '../../../features/products/presentation/blocs/products/products_bloc.dart';
 import '../../../features/products/presentation/pages/home_page.dart';
@@ -22,20 +24,12 @@ class AppRouter {
     redirect: (context, state) {
       final notifier = sl<AppRouterRefreshNotifier>();
 
-      print(
-        '[DEBUG] Router redirect - isOnline: ${notifier.isOnline}, currentUser: ${notifier.currentUser.email}, location: ${state.matchedLocation}',
-      );
-
       // Redirect to /nonetwork if no connection
       if (!notifier.isOnline) {
-        print(
-          '[DEBUG] Router redirect - no connection, redirecting to /nonetwork',
-        );
         return '/nonetwork';
       }
 
       if (notifier.isOnline && state.matchedLocation == '/nonetwork') {
-        print('[DEBUG] Router redirect - back online, redirecting to /home');
         return '/home';
       }
 
@@ -49,9 +43,6 @@ class AppRouter {
 
       // Redirect to login if accessing protected route without auth
       if (notifier.currentUser == AppUser.empty && requiresAuth) {
-        print(
-          '[DEBUG] Router redirect - protected route accessed without auth',
-        );
         return '/login';
       }
 
@@ -59,11 +50,9 @@ class AppRouter {
       if (notifier.currentUser != AppUser.empty &&
           (state.matchedLocation == '/login' ||
               state.matchedLocation == '/register')) {
-        print('[DEBUG] Router redirect - authenticated user on auth route');
         return '/home';
       }
 
-      print('[DEBUG] No redirect needed');
       return null;
     },
     routes: [
@@ -72,8 +61,11 @@ class AppRouter {
         name: 'home',
         builder: (context, state) => MultiBlocProvider(
           providers: [
-            // BlocProvider.value(value: sl<AuthBloc>()..add(CheckAuthStatus())),
             BlocProvider.value(value: sl<ProductsBloc>()..add(LoadProducts())),
+            BlocProvider.value(
+              value: sl<CartBloc>()
+                ..add(LoadCart(sl<AppRouterRefreshNotifier>().currentUser.id)),
+            ),
           ],
           child: const HomePage(),
         ),
@@ -83,18 +75,34 @@ class AppRouter {
             name: 'product-detail',
             builder: (context, state) {
               final productId = state.pathParameters['id']!;
-              return BlocProvider.value(
-                value: sl<ProductDetailBloc>()
-                  ..add(LoadProductDetail(productId)),
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider.value(
+                    value: sl<ProductDetailBloc>()
+                      ..add(LoadProductDetail(productId)),
+                  ),
+                  BlocProvider.value(
+                    value: sl<CartBloc>()
+                      ..add(
+                        LoadCart(sl<AppRouterRefreshNotifier>().currentUser.id),
+                      ),
+                  ),
+                ],
                 child: const ProductDetailPage(),
               );
             },
           ),
-          // GoRoute(
-          //   path: 'cart',
-          //   name: 'cart',
-          //   builder: (context, state) => const CartPage(),
-          // ),
+          GoRoute(
+            path: 'cart/:userId',
+            name: 'cart',
+            builder: (context, state) {
+              final userId = state.pathParameters['userId']!;
+              return BlocProvider.value(
+                value: sl<CartBloc>()..add(LoadCart(userId)),
+                child: const CartPage(),
+              );
+            },
+          ),
           GoRoute(
             path: 'profile',
             name: 'profile',

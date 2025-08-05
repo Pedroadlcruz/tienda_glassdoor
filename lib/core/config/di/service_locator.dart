@@ -10,6 +10,10 @@ import '../../../features/auth/domain/usecases/register_with_email.dart';
 import '../../../features/auth/presentation/blocs/auth/auth_bloc.dart';
 import '../../../features/auth/presentation/blocs/login/login_bloc.dart';
 import '../../../features/auth/presentation/blocs/register/register_bloc.dart';
+import '../../../features/cart/data/repositories/cart_repository_impl.dart';
+import '../../../features/cart/domain/repositories/cart_repository.dart';
+import '../../../features/cart/domain/usecases/cart_usecases.dart';
+import '../../../features/cart/presentation/blocs/cart/cart_bloc.dart';
 import '../../../features/products/data/repositories/fake_products_repository_impl.dart';
 import '../../../features/products/domain/repositories/products_repository.dart';
 import '../../../features/products/domain/usecases/products_usecases.dart';
@@ -34,6 +38,7 @@ Future<void> setUpServiceLocator() async {
   sl.registerFactory(() => AuthBloc(sl<AuthUseCases>()));
   sl.registerFactory(() => ProductsBloc(sl<ProductsUseCases>()));
   sl.registerFactory(() => ProductDetailBloc(sl<ProductsUseCases>()));
+  sl.registerFactory(() => CartBloc(sl<CartUseCases>()));
 
   //! Use cases
   sl.registerLazySingleton(() => LoginWithEmail(sl<AuthRepository>()));
@@ -41,6 +46,7 @@ Future<void> setUpServiceLocator() async {
   sl.registerLazySingleton(() => RegisterWithEmail(sl<AuthRepository>()));
   sl.registerLazySingleton(() => AuthUseCases(sl<AuthRepository>()));
   sl.registerLazySingleton(() => ProductsUseCases(sl<ProductsRepository>()));
+  sl.registerLazySingleton(() => CartUseCases(sl<CartRepository>()));
 
   //! Repositories
 
@@ -48,6 +54,7 @@ Future<void> setUpServiceLocator() async {
   sl.registerLazySingleton<ProductsRepository>(
     () => FakeProductsRepositoryImpl(),
   );
+  sl.registerLazySingleton<CartRepository>(() => CartRepositoryImpl());
 
   //!Services
 
