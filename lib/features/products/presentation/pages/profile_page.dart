@@ -84,7 +84,7 @@ class ProfilePage extends StatelessWidget {
                           Theme.of(context).colorScheme.primary,
                           Theme.of(
                             context,
-                          ).colorScheme.primary.withOpacity(0.8),
+                          ).colorScheme.primary.withValues(alpha: 0.8),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -107,7 +107,7 @@ class ProfilePage extends StatelessWidget {
                                     imageUrl: user.photoUrl!,
                                     fit: BoxFit.cover,
                                     placeholder: (context, url) => Container(
-                                      color: Colors.white.withOpacity(0.2),
+                                      color: Colors.white.withValues(alpha: 0.2),
                                       child: const Icon(
                                         Icons.person,
                                         size: 50,
@@ -116,7 +116,7 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                     errorWidget: (context, url, error) =>
                                         Container(
-                                          color: Colors.white.withOpacity(0.2),
+                                          color: Colors.white.withValues(alpha: 0.2),
                                           child: const Icon(
                                             Icons.person,
                                             size: 50,
@@ -125,7 +125,7 @@ class ProfilePage extends StatelessWidget {
                                         ),
                                   )
                                 : Container(
-                                    color: Colors.white.withOpacity(0.2),
+                                    color: Colors.white.withValues(alpha: 0.2),
                                     child: const Icon(
                                       Icons.person,
                                       size: 50,
@@ -152,7 +152,7 @@ class ProfilePage extends StatelessWidget {
                           user.email,
                           style: GoogleFonts.poppins(
                             fontSize: 16,
-                            color: Colors.white.withOpacity(0.9),
+                            color: Colors.white.withValues(alpha: 0.9),
                           ),
                         ),
                       ],
