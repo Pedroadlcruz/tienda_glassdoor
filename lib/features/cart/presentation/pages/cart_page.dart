@@ -81,13 +81,6 @@ class CartPage extends StatelessWidget {
       ),
       body: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
-          print('[DEBUG] CartPage - Current cart state: ${state.runtimeType}');
-          if (state is CartLoaded) {
-            print(
-              '[DEBUG] CartPage - Cart loaded with ${state.items.length} items',
-            );
-          }
-
           if (state is CartInitial) {
             return const Center(child: CircularProgressIndicator());
           }

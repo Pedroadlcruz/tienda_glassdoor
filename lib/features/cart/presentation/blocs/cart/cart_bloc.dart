@@ -25,7 +25,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   Future<void> _onLoadCart(LoadCart event, Emitter<CartState> emit) async {
-    print('[DEBUG] Loading cart for user: ${event.userId}');
     emit(CartLoading());
 
     try {
@@ -37,21 +36,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       _cartSubscription = _cartUseCases.getCartStream(event.userId).listen((
         items,
       ) {
-        print('[DEBUG] Cart stream received ${items.length} items');
         final totalItems = _cartUseCases.calculateTotalItems(items);
         if (items.isEmpty) {
-          print('[DEBUG] Cart is empty');
           add(_LoadCartEmpty(totalItems));
         } else {
           final total = _cartUseCases.calculateTotal(items);
-          print(
-            '[DEBUG] Cart loaded: $totalItems items, total: \$${total.toStringAsFixed(2)}',
-          );
           add(_LoadCartSuccess(items, total, totalItems));
         }
       });
     } catch (e) {
-      print('[ERROR] Error loading cart: $e');
       emit(CartError(e.toString()));
     }
   }

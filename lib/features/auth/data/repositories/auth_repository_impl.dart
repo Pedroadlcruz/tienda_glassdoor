@@ -112,10 +112,8 @@ class AuthRepositoryImpl implements AuthRepository {
 
       return appUser;
     } on FirebaseAuthException catch (e) {
-      print('[ERROR] Firebase Auth Exception: ${e.code} - ${e.message}');
       throw _handleAuthException(e);
     } catch (e) {
-      print('[ERROR] Unexpected error during Google sign-in: $e');
       throw Exception(
         'Ha ocurrido un error inesperado durante el inicio de sesión con Google',
       );

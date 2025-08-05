@@ -28,7 +28,6 @@ class CartRepositoryImpl implements CartRepository {
         return CartItem.fromJson(data);
       }).toList();
     } catch (e) {
-      print('Error loading cart items: $e');
       throw Exception(
         'Ha ocurrido un error al cargar los artículos del carrito',
       );
@@ -44,7 +43,6 @@ class CartRepositoryImpl implements CartRepository {
       if (userId.isEmpty) return null;
       final items = await getCartItems(userId);
       if (items.isEmpty) {
-        print('[DEBUG] No items found in cart for user: $userId');
         return null; // No items in cart
       }
       try {
@@ -56,7 +54,6 @@ class CartRepositoryImpl implements CartRepository {
         return null; // Product not found
       }
     } catch (e) {
-      print('Error getting cart item by product ID: $e');
       return null;
     }
   }
@@ -64,11 +61,6 @@ class CartRepositoryImpl implements CartRepository {
   @override
   Future<void> addToCart(String userId, CartItem item) async {
     try {
-      print('[DEBUG] CartRepository - Adding item to cart for user: $userId');
-      print(
-        '[DEBUG] CartRepository - Item: ${item.product.name}, quantity: ${item.quantity}',
-      );
-
       // Check if product already exists in cart
       final existingItem = await getCartItemByProductId(
         userId,
@@ -77,9 +69,6 @@ class CartRepositoryImpl implements CartRepository {
 
       if (existingItem != null) {
         // Product exists, update quantity
-        print(
-          '[DEBUG] CartRepository - Product already exists, updating quantity',
-        );
         final newQuantity = existingItem.quantity + item.quantity;
         await _firestore
             .collection('users')
@@ -87,16 +76,9 @@ class CartRepositoryImpl implements CartRepository {
             .collection('cart')
             .doc(existingItem.id)
             .update({'quantity': newQuantity});
-        print(
-          '[DEBUG] CartRepository - Successfully updated quantity to: $newQuantity',
-        );
       } else {
         // Product doesn't exist, add new item
-        print(
-          '[DEBUG] CartRepository - Product doesn\'t exist, adding new item',
-        );
         final cartData = item.toMap();
-        print('[DEBUG] CartRepository - Cart data to save: $cartData');
 
         await _firestore
             .collection('users')
@@ -104,10 +86,8 @@ class CartRepositoryImpl implements CartRepository {
             .collection('cart')
             .doc(item.id)
             .set(cartData);
-        print('[DEBUG] CartRepository - Successfully added new item to cart');
       }
     } catch (e) {
-      print('[ERROR] CartRepository - Error adding item to cart: $e');
       throw Exception('Ha ocurrido un error al agregar el artículo al carrito');
     }
   }
@@ -171,7 +151,6 @@ class CartRepositoryImpl implements CartRepository {
 
   @override
   Stream<List<CartItem>> getCartStream(String userId) {
-    print('[DEBUG] CartRepository - Starting cart stream for user: $userId');
     if (userId.isEmpty) return Stream.value([]);
     return _firestore
         .collection('users')
@@ -179,29 +158,16 @@ class CartRepositoryImpl implements CartRepository {
         .collection('cart')
         .snapshots()
         .map((snapshot) {
-          print(
-            '[DEBUG] CartRepository - Received snapshot with ${snapshot.docs.length} documents',
-          );
           final items = snapshot.docs.map((doc) {
             final data = doc.data();
             data['id'] = doc.id; // Ensure the document ID is included
-            print('[DEBUG] CartRepository - Processing document: ${doc.id}');
-            print('[DEBUG] CartRepository - Document data: $data');
             try {
               final cartItem = CartItem.fromJson(data);
-              print(
-                '[DEBUG] CartRepository - Successfully parsed cart item: ${cartItem.product.name}',
-              );
               return cartItem;
             } catch (e) {
-              print('[ERROR] CartRepository - Error parsing cart item: $e');
-              print('[ERROR] CartRepository - Data: $data');
               rethrow;
             }
           }).toList();
-          print(
-            '[DEBUG] CartRepository - Returning ${items.length} cart items',
-          );
           return items;
         });
   }

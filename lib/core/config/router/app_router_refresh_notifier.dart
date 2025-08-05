@@ -26,27 +26,18 @@ class AppRouterRefreshNotifier extends ChangeNotifier {
   }
 
   void _initializeListeners() {
-    // Listen to authentication state changes
     _authStateSubscription = _authRepository.authStateChanges.listen((user) {
       _currentUser = user;
-      print(
-        '[DEBUG] AppRouterRefreshNotifier - Auth state changed: ${user.email}',
-      );
       notifyListeners();
     });
 
-    // Listen to connectivity changes
     _connectivitySubscription = _networkInfo.onConnectivityChanged.listen((
       result,
     ) {
       _isOnline = _networkInfo.isOnline(result);
-      print(
-        '[DEBUG] AppRouterRefreshNotifier - Connectivity changed: ${_isOnline ? 'online' : 'offline'}',
-      );
       notifyListeners();
     });
 
-    // Initialize current connectivity state
     _initializeConnectivityState();
   }
 
@@ -54,14 +45,8 @@ class AppRouterRefreshNotifier extends ChangeNotifier {
     try {
       final result = await _networkInfo.isConnected;
       _isOnline = result;
-      print(
-        '[DEBUG] AppRouterRefreshNotifier - Initial connectivity: ${_isOnline ? 'online' : 'offline'}',
-      );
       notifyListeners();
     } catch (e) {
-      print(
-        '[ERROR] AppRouterRefreshNotifier - Error checking initial connectivity: $e',
-      );
       _isOnline = false;
       notifyListeners();
     }
