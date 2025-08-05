@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../auth/presentation/blocs/auth/auth_bloc.dart';
+import '../../../cart/presentation/blocs/cart/cart_bloc.dart';
 import '../blocs/products/products_bloc.dart';
 import '../widgets/product_card.dart';
 
@@ -55,56 +56,57 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Tienda Glassdoor'),
         actions: [
-          // BlocBuilder<AuthBloc, AuthState>(
-          //   builder: (context, authState) {
-          //     if (authState is AuthAuthenticated) {
-          //       return BlocBuilder<CartBloc, CartState>(
-          //         builder: (context, cartState) {
-          //           int itemCount = 0;
-          //           if (cartState is CartLoaded) {
-          //             itemCount = cartState.totalItems;
-          //           } else if (cartState is CartEmpty) {
-          //             itemCount = cartState.totalItems;
-          //           }
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, authState) {
+              if (authState is AuthAuthenticated) {
+                return BlocBuilder<CartBloc, CartState>(
+                  builder: (context, cartState) {
+                    int itemCount = 0;
+                    if (cartState is CartLoaded) {
+                      itemCount = cartState.totalItems;
+                    } else if (cartState is CartEmpty) {
+                      itemCount = cartState.totalItems;
+                    }
 
-          //           return Stack(
-          //             children: [
-          //               IconButton(
-          //                 onPressed: () => context.go('/cart'),
-          //                 icon: const Icon(Icons.shopping_cart),
-          //               ),
-          //               if (itemCount > 0)
-          //                 Positioned(
-          //                   right: 8,
-          //                   top: 8,
-          //                   child: Container(
-          //                     padding: const EdgeInsets.all(2),
-          //                     decoration: BoxDecoration(
-          //                       color: Colors.red,
-          //                       borderRadius: BorderRadius.circular(10),
-          //                     ),
-          //                     constraints: const BoxConstraints(
-          //                       minWidth: 16,
-          //                       minHeight: 16,
-          //                     ),
-          //                     child: Text(
-          //                       '$itemCount',
-          //                       style: const TextStyle(
-          //                         color: Colors.white,
-          //                         fontSize: 10,
-          //                       ),
-          //                       textAlign: TextAlign.center,
-          //                     ),
-          //                   ),
-          //                 ),
-          //             ],
-          //           );
-          //         },
-          //       );
-          //     }
-          //     return const SizedBox.shrink();
-          //   },
-          // ),
+                    return Stack(
+                      children: [
+                        IconButton(
+                          onPressed: () =>
+                              context.go('/home/cart/${authState.user.id}'),
+                          icon: const Icon(Icons.shopping_cart),
+                        ),
+                        if (itemCount > 0)
+                          Positioned(
+                            right: 8,
+                            top: 8,
+                            child: Container(
+                              padding: const EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              constraints: const BoxConstraints(
+                                minWidth: 16,
+                                minHeight: 16,
+                              ),
+                              child: Text(
+                                '$itemCount',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
           BlocBuilder<AuthBloc, AuthState>(
             builder: (context, authState) {
               if (authState is AuthAuthenticated) {
@@ -314,45 +316,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-// class HomePage extends StatelessWidget {
-//   const HomePage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('Home Page')),
-//       body: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         // crossAxisAlignment: CrossAxisAlignment.center,
-//         children: [
-//           Text(
-//             'Welcome to the Home Page!',
-//             style: Theme.of(context).textTheme.bodyLarge,
-//           ),
-
-//           const SizedBox(height: 20, width: double.infinity),
-//           Visibility(
-//             // Visible if the user is not authenticated
-//             visible: !sl<AppRouterRefreshNotifier>().isAuthenticated,
-//             replacement: ElevatedButton(
-//               onPressed: () async {
-//                 //Logout
-//                 await sl<Logout>().call();
-//               },
-//               child: const Text('Logout'),
-//             ),
-//             child: ElevatedButton(
-//               onPressed: () {
-//                 // Navigate to another page or perform an action
-//                 context.go('/login');
-//               },
-//               child: const Text('Go to Login'),
-//             ),
-//           ),
-//           const SizedBox(height: 20),
-//         ],
-//       ),
-//     );
-//   }
-// }

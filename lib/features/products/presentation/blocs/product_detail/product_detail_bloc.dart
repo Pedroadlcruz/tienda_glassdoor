@@ -49,4 +49,12 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
       }
     }
   }
+
+  // get quantity from state
+  int get quantity {
+    if (state is ProductDetailLoaded) {
+      return (state as ProductDetailLoaded).quantity;
+    }
+    return 1;
+  }
 }
