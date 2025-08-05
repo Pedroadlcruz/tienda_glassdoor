@@ -181,7 +181,7 @@ class ProfilePage extends StatelessWidget {
                           _buildInfoRow(
                             context,
                             icon: Icons.fingerprint,
-                            label: 'ID de Usuario',
+                            label: Strings.userId,
                             value: user.id,
                           ),
                           const SizedBox(height: 12),
@@ -190,7 +190,7 @@ class ProfilePage extends StatelessWidget {
                           _buildInfoRow(
                             context,
                             icon: Icons.email,
-                            label: 'Correo Electrónico',
+                            label: Strings.userEmail,
                             value: user.email,
                           ),
                           const SizedBox(height: 12),
@@ -199,8 +199,8 @@ class ProfilePage extends StatelessWidget {
                           _buildInfoRow(
                             context,
                             icon: Icons.person,
-                            label: 'Nombre',
-                            value: user.name ?? 'No especificado',
+                            label: Strings.userName,
+                            value: user.name ?? Strings.notSpecified,
                           ),
                           const SizedBox(height: 12),
 
