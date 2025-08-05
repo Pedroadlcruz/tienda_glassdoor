@@ -3,10 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static const Color _primaryColor = Color(0xFF2196F3);
-  static const Color _secondaryColor = Color(0xFF1976D2);
-  static const Color _accentColor = Color(0xFF64B5F6);
-  static const Color _errorColor = Color(0xFFD32F2F);
-  static const Color _successColor = Color(0xFF388E3C);
 
   static ThemeData get lightTheme {
     return ThemeData(
