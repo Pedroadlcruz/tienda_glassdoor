@@ -10,7 +10,7 @@ sealed class ProductsEvent extends Equatable {
 final class LoadProducts extends ProductsEvent {}
 
 final class LoadProductsByCategory extends ProductsEvent {
-  final String category;
+  final ProductCategory category;
 
   const LoadProductsByCategory(this.category);
 
@@ -20,9 +20,19 @@ final class LoadProductsByCategory extends ProductsEvent {
 
 final class SearchProducts extends ProductsEvent {
   final String query;
+  final ProductCategory? category;
 
-  const SearchProducts(this.query);
+  const SearchProducts(this.query, {this.category});
 
   @override
-  List<Object?> get props => [query];
+  List<Object?> get props => [query, category];
+}
+
+final class SelectCategory extends ProductsEvent {
+  final ProductCategory category;
+
+  const SelectCategory(this.category);
+
+  @override
+  List<Object?> get props => [category];
 }

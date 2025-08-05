@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../auth/presentation/blocs/auth/auth_bloc.dart';
 import '../../../cart/presentation/blocs/cart/cart_bloc.dart';
+import '../../domain/enums/product_category.dart';
 import '../blocs/products/products_bloc.dart';
 import '../widgets/product_card.dart';
 
@@ -17,8 +18,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _searchController = TextEditingController();
-  String _selectedCategory = 'Todos';
-  final List<String> _categories = ['Todos', 'Electronics', 'Sports'];
 
   @override
   void dispose() {
@@ -26,23 +25,29 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  void _onCategoryChanged(String category) {
-    setState(() {
-      _selectedCategory = category;
-    });
-
-    if (category == 'Todos') {
-      context.read<ProductsBloc>().add(LoadProducts());
-    } else {
-      context.read<ProductsBloc>().add(LoadProductsByCategory(category));
-    }
+  void _onCategoryChanged(ProductCategory category) {
+    context.read<ProductsBloc>().add(SelectCategory(category));
   }
 
   void _onSearchChanged(String query) {
     if (query.isNotEmpty) {
-      context.read<ProductsBloc>().add(SearchProducts(query));
+      // Get current category from state
+      final currentState = context.read<ProductsBloc>().state;
+      ProductCategory? currentCategory;
+      
+      if (currentState is ProductsLoaded) {
+        currentCategory = currentState.selectedCategory;
+      }
+      
+      context.read<ProductsBloc>().add(SearchProducts(query, category: currentCategory));
     } else {
-      _onCategoryChanged(_selectedCategory);
+      // Reset to current category when search is cleared
+      final currentState = context.read<ProductsBloc>().state;
+      if (currentState is ProductsLoaded) {
+        context.read<ProductsBloc>().add(SelectCategory(currentState.selectedCategory));
+      } else {
+        context.read<ProductsBloc>().add(LoadProducts());
+      }
     }
   }
 
@@ -199,32 +204,40 @@ class _HomePageState extends State<HomePage> {
           ),
 
           // Category Filter
-          SizedBox(
-            height: 50,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: _categories.length,
-              itemBuilder: (context, index) {
-                final category = _categories[index];
-                final isSelected = category == _selectedCategory;
+          BlocBuilder<ProductsBloc, ProductsState>(
+            builder: (context, state) {
+              final selectedCategory = state is ProductsLoaded 
+                  ? state.selectedCategory 
+                  : ProductCategory.all;
 
-                return Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: FilterChip(
-                    label: Text(category),
-                    selected: isSelected,
-                    onSelected: (selected) {
-                      if (selected) {
-                        _onCategoryChanged(category);
-                      }
-                    },
-                    selectedColor: Theme.of(context).colorScheme.primary,
-                    checkmarkColor: Colors.white,
-                  ),
-                );
-              },
-            ),
+              return SizedBox(
+                height: 50,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: ProductCategory.availableCategories.length,
+                  itemBuilder: (context, index) {
+                    final category = ProductCategory.availableCategories[index];
+                    final isSelected = category == selectedCategory;
+
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: FilterChip(
+                        label: Text(category.displayName),
+                        selected: isSelected,
+                        onSelected: (selected) {
+                          if (selected) {
+                            _onCategoryChanged(category);
+                          }
+                        },
+                        selectedColor: Theme.of(context).colorScheme.primary,
+                        checkmarkColor: Colors.white,
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
           ),
 
           const SizedBox(height: 16),
