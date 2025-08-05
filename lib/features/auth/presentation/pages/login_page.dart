@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/constants/strings.dart';
 import '../../../../core/extensions/validators.dart';
 import '../blocs/login/login_bloc.dart';
 
@@ -82,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   // Title
                   Text(
-                    'Bienvenido',
+                    Strings.welcome,
                     style: GoogleFonts.poppins(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -92,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 10),
 
                   Text(
-                    'Inicia sesión en tu cuenta',
+                    Strings.signInMessage,
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       color: Colors.grey[600],
@@ -106,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
-                      labelText: 'Email',
+                      labelText: Strings.email,
                       prefixIcon: Icon(Icons.email),
                     ),
                     validator: (email) => email!.isEmailValid,
@@ -118,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                     controller: _passwordController,
                     obscureText: !_isPasswordVisible,
                     decoration: InputDecoration(
-                      labelText: 'Contraseña',
+                      labelText: Strings.password,
                       prefixIcon: const Icon(Icons.lock),
                       suffixIcon: IconButton(
                         icon: Icon(
@@ -155,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                               )
-                            : const Text('Iniciar Sesión'),
+                            : const Text(Strings.signIn),
                       );
                     },
                   ),
@@ -168,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
-                          'O',
+                          Strings.or,
                           style: GoogleFonts.poppins(color: Colors.grey[600]),
                         ),
                       ),
@@ -181,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                   OutlinedButton.icon(
                     onPressed: _signInWithGoogle,
                     icon: const Icon(Icons.g_mobiledata, size: 24),
-                    label: const Text('Continuar con Google'),
+                    label: const Text(Strings.signInWithGoogle),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
@@ -193,13 +194,13 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '¿No tienes cuenta? ',
+                        '${Strings.dontHaveAccount} ',
                         style: GoogleFonts.poppins(color: Colors.grey[600]),
                       ),
                       TextButton(
                         onPressed: () => context.go('/register'),
                         child: Text(
-                          'Regístrate',
+                          Strings.createAccount,
                           style: GoogleFonts.poppins(
                             color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.w600,
