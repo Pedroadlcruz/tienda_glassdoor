@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../auth/presentation/blocs/auth/auth_bloc.dart';
+import '../../../cart/presentation/blocs/cart/cart_bloc.dart';
 import '../../data/models/product.dart';
 
 class ProductCard extends StatelessWidget {
@@ -15,10 +16,10 @@ class ProductCard extends StatelessWidget {
   void _addToCart(BuildContext context) {
     final authState = context.read<AuthBloc>().state;
     if (authState is AuthAuthenticated) {
-      // context.read<CartBloc>().add(
-      //   AddToCart(userId: authState.user.id, product: product),
-      // );
-
+      final userId = authState.user.id;
+      context.read<CartBloc>().add(
+        AddToCart(userId: userId, product: product, quantity: 1),
+      );
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${product.name} agregado al carrito'),
@@ -63,7 +64,6 @@ class ProductCard extends StatelessWidget {
         child: Stack(
           children: [
             SizedBox(
-              // height: 400,
               width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
