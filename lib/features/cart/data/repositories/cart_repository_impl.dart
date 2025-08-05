@@ -41,9 +41,17 @@ class CartRepositoryImpl implements CartRepository {
     String productId,
   ) async {
     try {
+      if (userId.isEmpty) return null;
       final items = await getCartItems(userId);
+      if (items.isEmpty) {
+        print('[DEBUG] No items found in cart for user: $userId');
+        return null; // No items in cart
+      }
       try {
-        return items.firstWhere((item) => item.product.id == productId);
+        return items.firstWhere(
+          (item) => item.product.id == productId,
+          // orElse: () => throw Exception('Product not found in cart'),
+        );
       } catch (e) {
         return null; // Product not found
       }
@@ -126,6 +134,7 @@ class CartRepositoryImpl implements CartRepository {
     String itemId,
     int quantity,
   ) async {
+    if (userId.isEmpty) return;
     try {
       await _firestore
           .collection('users')
@@ -143,6 +152,7 @@ class CartRepositoryImpl implements CartRepository {
   @override
   Future<void> clearCart(String userId) async {
     try {
+      if (userId.isEmpty) return;
       final snapshot = await _firestore
           .collection('users')
           .doc(userId)
@@ -162,6 +172,7 @@ class CartRepositoryImpl implements CartRepository {
   @override
   Stream<List<CartItem>> getCartStream(String userId) {
     print('[DEBUG] CartRepository - Starting cart stream for user: $userId');
+    if (userId.isEmpty) return Stream.value([]);
     return _firestore
         .collection('users')
         .doc(userId)
