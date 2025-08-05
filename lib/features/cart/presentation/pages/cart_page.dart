@@ -263,9 +263,9 @@ class CartPage extends StatelessWidget {
                                         ),
                                         const Spacer(),
                                         Text(
-                                          '\$${item.totalPrice.toStringAsFixed(2)}',
+                                          '\$${item.totalPrice.toStringAsFixed(1)}',
                                           style: GoogleFonts.poppins(
-                                            fontSize: 14,
+                                            fontSize: 11,
                                             fontWeight: FontWeight.bold,
                                             color: Theme.of(
                                               context,
