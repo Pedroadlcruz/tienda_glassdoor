@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants/strings.dart';
+import '../../../../core/config/theme/text_styles.dart';
 import '../../../../core/extensions/validators.dart';
 import '../blocs/login/login_bloc.dart';
 
@@ -84,20 +84,14 @@ class _LoginPageState extends State<LoginPage> {
                   // Title
                   Text(
                     Strings.welcome,
-                    style: GoogleFonts.poppins(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyles.mainTitle,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 10),
 
                   Text(
                     Strings.signInMessage,
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyles.secondaryText,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 40),
@@ -170,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
                           Strings.or,
-                          style: GoogleFonts.poppins(color: Colors.grey[600]),
+                          style: TextStyles.smallGreyText,
                         ),
                       ),
                       const Expanded(child: Divider()),
@@ -195,15 +189,14 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Text(
                         '${Strings.dontHaveAccount} ',
-                        style: GoogleFonts.poppins(color: Colors.grey[600]),
+                        style: TextStyles.smallGreyText,
                       ),
                       TextButton(
                         onPressed: () => context.go('/register'),
                         child: Text(
                           Strings.createAccount,
-                          style: GoogleFonts.poppins(
+                          style: TextStyles.linkText.copyWith(
                             color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
