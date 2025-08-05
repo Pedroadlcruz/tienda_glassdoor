@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/config/theme/text_styles.dart';
 import '../../../auth/presentation/blocs/auth/auth_bloc.dart';
 import '../../../cart/presentation/blocs/cart/cart_bloc.dart';
 import '../../data/models/product.dart';
@@ -88,15 +88,12 @@ class ProductDetailPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text(
                       'Error al cargar el producto',
-                      style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        color: Colors.grey[600],
-                      ),
+                      style: TextStyles.errorMessage,
                     ),
                     const SizedBox(height: 8),
                     Text(
                       state.message,
-                      style: GoogleFonts.poppins(color: Colors.grey[500]),
+                      style: TextStyles.smallErrorMessage,
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -150,19 +147,14 @@ class ProductDetailPage extends StatelessWidget {
                           // Product Name
                           Text(
                             product.name,
-                            style: GoogleFonts.poppins(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: TextStyles.productName,
                           ),
                           const SizedBox(height: 8),
 
                           // Price
                           Text(
                             '\$${product.price.toStringAsFixed(2)}',
-                            style: GoogleFonts.poppins(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
+                            style: TextStyles.productPrice.copyWith(
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
@@ -179,18 +171,12 @@ class ProductDetailPage extends StatelessWidget {
                               const SizedBox(width: 4),
                               Text(
                                 product.rating.toString(),
-                                style: GoogleFonts.poppins(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: TextStyles.boldText,
                               ),
                               const SizedBox(width: 8),
                               Text(
                                 '(${product.reviewCount} reseñas)',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 14,
-                                  color: Colors.grey[600],
-                                ),
+                                style: TextStyles.smallGreyText,
                               ),
                             ],
                           ),
@@ -211,8 +197,7 @@ class ProductDetailPage extends StatelessWidget {
                                 product.stock > 0
                                     ? 'En stock (${product.stock} disponibles)'
                                     : 'Sin stock',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 14,
+                                style: TextStyles.smallText.copyWith(
                                   color: product.stock > 0
                                       ? Colors.green
                                       : Colors.red,
@@ -225,19 +210,12 @@ class ProductDetailPage extends StatelessWidget {
                           // Description
                           Text(
                             'Descripción',
-                            style: GoogleFonts.poppins(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: TextStyles.sectionTitle,
                           ),
                           const SizedBox(height: 8),
                           Text(
                             product.description,
-                            style: GoogleFonts.poppins(
-                              fontSize: 16,
-                              color: Colors.grey[700],
-                              height: 1.5,
-                            ),
+                            style: TextStyles.productDescription,
                           ),
                           const SizedBox(height: 32),
 
@@ -245,10 +223,7 @@ class ProductDetailPage extends StatelessWidget {
                           if (product.stock > 0) ...[
                             Text(
                               'Cantidad',
-                              style: GoogleFonts.poppins(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: TextStyles.boldText,
                             ),
                             const SizedBox(height: 8),
                             Row(
@@ -276,10 +251,7 @@ class ProductDetailPage extends StatelessWidget {
                                   ),
                                   child: Text(
                                     '$quantity',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                    style: TextStyles.boldText,
                                   ),
                                 ),
                                 IconButton(
@@ -297,10 +269,7 @@ class ProductDetailPage extends StatelessWidget {
                                 const Spacer(),
                                 Text(
                                   'Stock: ${product.stock}',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    color: Colors.grey[600],
-                                  ),
+                                  style: TextStyles.smallGreyText,
                                 ),
                               ],
                             ),
@@ -332,10 +301,7 @@ class ProductDetailPage extends StatelessWidget {
                         ),
                         child: Text(
                           'Agregar al Carrito - \$${(product.price * quantity).toStringAsFixed(2)}',
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: TextStyles.buttonText,
                         ),
                       ),
                     )
