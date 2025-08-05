@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/constants/strings.dart';
 import '../../../auth/presentation/blocs/auth/auth_bloc.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -37,7 +38,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Mi Perfil')),
+      appBar: AppBar(title: const Text(Strings.profileTitle)),
       body: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is AuthLoading) {
@@ -138,7 +139,7 @@ class ProfilePage extends StatelessWidget {
 
                         // User Name
                         Text(
-                          user.name ?? 'Usuario',
+                          user.name ?? Strings.user,
                           style: GoogleFonts.poppins(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -168,7 +169,7 @@ class ProfilePage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Información Personal',
+                            Strings.personalInformation,
                             style: GoogleFonts.poppins(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,

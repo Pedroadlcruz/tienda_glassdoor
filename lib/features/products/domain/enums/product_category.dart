@@ -1,12 +1,13 @@
+import '../../../../core/constants/strings.dart';
+
 enum ProductCategory {
-  all('Todos'),
-  electronics('Electronics'),
-  sports('Sports'),
-  clothing('Clothing'),
-  books('Books'),
-  home('Home'),
-  beauty('Beauty'),
-  toys('Toys');
+  all(Strings.allCategories),
+  electronics(Strings.electronics),
+  sports(Strings.sports),
+  clothing(Strings.clothing),
+  books(Strings.books),
+  beauty(Strings.beauty),
+  toys(Strings.toys);
 
   const ProductCategory(this.displayName);
 
@@ -25,11 +26,10 @@ enum ProductCategory {
     ProductCategory.sports,
     ProductCategory.clothing,
     ProductCategory.books,
-    ProductCategory.home,
     ProductCategory.beauty,
     ProductCategory.toys,
   ];
 
   @override
   String toString() => displayName;
-} 
+}

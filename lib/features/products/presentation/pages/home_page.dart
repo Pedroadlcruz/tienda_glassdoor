@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/constants/strings.dart';
 import '../../../auth/presentation/blocs/auth/auth_bloc.dart';
 import '../../../cart/presentation/blocs/cart/cart_bloc.dart';
 import '../../domain/enums/product_category.dart';
@@ -59,7 +60,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tienda Glassdoor'),
+        title: const Text(Strings.appTitle),
         actions: [
           BlocBuilder<AuthBloc, AuthState>(
             builder: (context, authState) {
@@ -124,26 +125,26 @@ class _HomePageState extends State<HomePage> {
                     }
                   },
                   itemBuilder: (context) => [
-                    const PopupMenuItem(
-                      value: 'profile',
-                      child: Row(
-                        children: [
-                          Icon(Icons.person),
-                          SizedBox(width: 8),
-                          Text('Mi Perfil'),
-                        ],
-                      ),
-                    ),
-                    const PopupMenuItem(
-                      value: 'logout',
-                      child: Row(
-                        children: [
-                          Icon(Icons.logout),
-                          SizedBox(width: 8),
-                          Text('Cerrar Sesión'),
-                        ],
-                      ),
-                    ),
+                                            const PopupMenuItem(
+                          value: 'profile',
+                          child: Row(
+                            children: [
+                              Icon(Icons.person),
+                              SizedBox(width: 8),
+                              Text(Strings.profile),
+                            ],
+                          ),
+                        ),
+                        const PopupMenuItem(
+                          value: 'logout',
+                          child: Row(
+                            children: [
+                              Icon(Icons.logout),
+                              SizedBox(width: 8),
+                              Text(Strings.logout),
+                            ],
+                          ),
+                        ),
                   ],
                 );
               } else {
@@ -162,7 +163,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Icon(Icons.login),
                           SizedBox(width: 8),
-                          Text('Iniciar Sesión'),
+                          Text(Strings.login),
                         ],
                       ),
                     ),
@@ -172,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Icon(Icons.person_add),
                           SizedBox(width: 8),
-                          Text('Registrarse'),
+                          Text(Strings.register),
                         ],
                       ),
                     ),
@@ -191,7 +192,7 @@ class _HomePageState extends State<HomePage> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Buscar productos...',
+                hintText: Strings.searchProducts,
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -262,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'Error al cargar productos',
+                          Strings.errorLoadingProducts,
                           style: GoogleFonts.poppins(
                             fontSize: 18,
                             color: Colors.grey[600],
@@ -292,7 +293,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            'No se encontraron productos',
+                            Strings.noProductsFound,
                             style: GoogleFonts.poppins(
                               fontSize: 18,
                               color: Colors.grey[600],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/constants/strings.dart';
 import '../../../auth/presentation/blocs/auth/auth_bloc.dart';
 import '../blocs/cart/cart_bloc.dart';
 
@@ -37,21 +38,21 @@ class CartPage extends StatelessWidget {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('Vaciar Carrito'),
+          title: const Text(Strings.clearCart),
           content: const Text(
-            '¿Estás seguro de que quieres vaciar el carrito?',
+            Strings.clearCartMessage,
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('Cancelar'),
+              child: const Text(Strings.cancel),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(ctx);
                 context.read<CartBloc>().add(ClearCart(authState.user.id));
               },
-              child: const Text('Vaciar'),
+              child: const Text(Strings.clear),
             ),
           ],
         ),
@@ -63,7 +64,7 @@ class CartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Carrito'),
+        title: const Text(Strings.cartTitle),
         actions: [
           BlocBuilder<CartBloc, CartState>(
             builder: (context, state) {
@@ -71,7 +72,7 @@ class CartPage extends StatelessWidget {
                 return IconButton(
                   onPressed: () => _clearCart(context),
                   icon: const Icon(Icons.delete_sweep),
-                  tooltip: 'Vaciar carrito',
+                  tooltip: Strings.clearCart,
                 );
               }
               return const SizedBox.shrink();
@@ -96,8 +97,8 @@ class CartPage extends StatelessWidget {
                 children: [
                   Icon(Icons.error_outline, size: 64, color: Colors.grey[400]),
                   const SizedBox(height: 16),
-                  Text(
-                    'Error al cargar el carrito',
+                                          Text(
+                          Strings.errorOccurred,
                     style: GoogleFonts.poppins(
                       fontSize: 18,
                       color: Colors.grey[600],
@@ -125,16 +126,16 @@ class CartPage extends StatelessWidget {
                     color: Colors.grey[400],
                   ),
                   const SizedBox(height: 16),
-                  Text(
-                    'Tu carrito está vacío',
+                                          Text(
+                          Strings.cartEmpty,
                     style: GoogleFonts.poppins(
                       fontSize: 18,
                       color: Colors.grey[600],
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    'Agrega algunos productos para comenzar',
+                                          Text(
+                          Strings.cartEmptyMessage,
                     style: GoogleFonts.poppins(color: Colors.grey[500]),
                     textAlign: TextAlign.center,
                   ),
@@ -311,7 +312,7 @@ class CartPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Total (${state.totalItems} items):',
+                            '${Strings.total} (${state.totalItems} ${Strings.totalItems}):',
                             style: GoogleFonts.poppins(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -334,19 +335,19 @@ class CartPage extends StatelessWidget {
                           onPressed: () {
                             // TODO: Implement checkout functionality
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  'Funcionalidad de checkout en desarrollo',
-                                ),
-                                backgroundColor: Colors.orange,
+                                                          const SnackBar(
+                              content: Text(
+                                Strings.checkoutInDevelopment,
                               ),
+                              backgroundColor: Colors.orange,
+                            ),
                             );
                           },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 16),
                           ),
                           child: Text(
-                            'Proceder al Pago',
+                            Strings.proceedToCheckout,
                             style: GoogleFonts.poppins(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
